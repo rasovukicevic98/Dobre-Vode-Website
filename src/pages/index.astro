@@ -1,11 +1,105 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
 ---
+<BaseLayout title="Dobre Vode">
+  <Header />
 
-<Layout>
-	<Welcome />
-</Layout>
+  <main class="mt-12 mb-24 px-4">
+    <!-- PAPER CARD -->
+    <section
+      class="
+        relative
+        w-full
+        max-w-sm
+        sm:max-w-md
+        md:max-w-lg
+        lg:max-w-xl
+        xl:max-w-2xl
+        mx-auto
+
+        rounded-xl
+        bg-[#f3e6cf]
+        shadow-[0_20px_70px_rgba(0,0,0,0.6)]
+        border
+        border-black/10
+        text-center
+      "
+    >
+      <!-- NAILS -->
+      <span class="absolute top-3 left-3 w-3 h-3 rounded-full bg-[#4b4b4b] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.6)]"></span>
+      <span class="absolute top-3 right-3 w-3 h-3 rounded-full bg-[#4b4b4b] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.6)]"></span>
+      <span class="absolute bottom-3 left-3 w-3 h-3 rounded-full bg-[#4b4b4b] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.6)]"></span>
+      <span class="absolute bottom-3 right-3 w-3 h-3 rounded-full bg-[#4b4b4b] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.6)]"></span>
+
+      <!-- INNER CONTENT -->
+      <div class="px-8 sm:px-10 md:px-12 lg:px-16 py-16 sm:py-20">
+        <!-- TITLE -->
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif tracking-wide text-[#2a1d13] mb-14">
+          Welcome to Dobre Vode
+        </h1>
+
+        <!-- STORY -->
+        <div
+          class="
+            space-y-9
+            text-[#3a2818]
+            text-base
+            sm:text-lg
+            lg:text-xl
+            leading-relaxed
+            font-light
+          "
+        >
+          <p class="italic text-lg sm:text-xl lg:text-2xl text-[#2a1d13]/90">
+            Dobro došli u naš restoran.
+          </p>
+
+          <p>
+            Naša priča počinje davne 2000. godine, na obali rijeke Tare. Tada smo
+            imali samo četiri stola, veliku želju i još veću ljubav prema domaćoj
+            hrani i gostoprimstvu.
+          </p>
+
+          <p>
+            Korak po korak, zahvaljujući vjernim gostima koji su nam se iznova
+            vraćali, rasli smo zajedno sa njima. Danas, naš restoran može da ugosti
+            preko 100 osoba, ali je duh sa samog početka ostao isti – toplina,
+            iskren osmijeh i osjećaj da ste došli na pravo mjesto.
+          </p>
+
+          <p class="pt-12 font-medium text-[#2a1d13] text-lg sm:text-xl lg:text-2xl">
+            Hvala vam što ste dio naše priče.
+          </p>
+        </div>
+
+        <!-- IMAGES (ALWAYS STACKED) -->
+        <div class="mt-16 flex flex-col gap-10">
+          <img
+            src="/images/spec1.jpg"
+            alt="Traditional dish"
+            class="
+              w-full
+              rounded-lg
+              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
+              border
+              border-black/10
+            "
+          />
+
+          <img
+            src="/images/spec2.jpg"
+            alt="Restaurant atmosphere"
+            class="
+              w-full
+              rounded-lg
+              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
+              border
+              border-black/10
+            "
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
