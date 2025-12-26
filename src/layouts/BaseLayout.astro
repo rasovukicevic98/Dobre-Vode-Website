@@ -8,29 +8,28 @@ const { title = "Dobre Vode" } = Astro.props;
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
     />
     <title>{title}</title>
   </head>
 
   <body class="min-h-screen">
-    <!-- Full wooden background -->
+    <!-- Fixed background layer -->
     <div
-      class="min-h-screen bg-cover bg-center"
+      class="fixed inset-0 -z-10 bg-cover bg-center"
       style="background-image: url('/images/wood-bg.jpg')"
-    >
-      <!-- Dark overlay -->
-      <div class="min-h-screen bg-black/60 flex justify-center">
-        <!-- SAFE AREA + EDGE PADDING -->
-        <div
-          class="w-full max-w-6xl px-6 sm:px-8 md:px-10"
-          style="
-            padding-left: max(1.5rem, env(safe-area-inset-left));
-            padding-right: max(1.5rem, env(safe-area-inset-right));
-          "
-        >
-          <slot />
-        </div>
+    ></div>
+
+    <!-- Content wrapper (NO dark overlay) -->
+    <div class="min-h-screen flex justify-center">
+      <div
+        class="w-full max-w-6xl px-6 sm:px-8 md:px-10"
+        style="
+          padding-left: max(1.5rem, env(safe-area-inset-left));
+          padding-right: max(1.5rem, env(safe-area-inset-right));
+        "
+      >
+        <slot />
       </div>
     </div>
   </body>
