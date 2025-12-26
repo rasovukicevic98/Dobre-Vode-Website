@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import { translations } from "../../i18n/translations";
+
+const t = translations.en.home;
+---
+
+<BaseLayout title="Dobre Vode">
+  <Header />
+
+  <main class="mt-12 mb-24 px-4">
+    <section
+      class="
+        relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl
+        mx-auto rounded-xl bg-[#f3e6cf]
+        shadow-[0_20px_70px_rgba(0,0,0,0.6)]
+        border border-black/10 text-center
+      "
+    >
+      <div class="px-8 sm:px-10 md:px-12 lg:px-16 py-16 sm:py-20">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl tracking-wide mb-14 text-[#7a1f1f] font-renfrew">
+          {t.title}
+        </h1>
+
+        <img
+          src="/images/spec2.jpg"
+          alt="Restaurant atmosphere"
+          class="w-full rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.4)] border border-black/10 mb-20"
+        />
+
+        <div class="space-y-9 text-[#3a2818] text-base sm:text-lg lg:text-xl leading-relaxed font-light">
+          <p class="italic text-lg sm:text-xl lg:text-2xl text-[#2a1d13]/90">
+            {t.welcome}
+          </p>
+
+          <p>{t.p1}</p>
+          <p>{t.p2}</p>
+
+          <p class="pt-12 font-medium text-[#2a1d13] text-lg sm:text-xl lg:text-2xl">
+            {t.thanks}
+          </p>
+        </div>
+
+        <!-- images stay unchanged -->
+                <div class="mt-16 flex flex-col gap-10">
+          <img
+            src="/images/spec1.jpg"
+            alt="Traditional dish"
+            class="
+              w-full
+              rounded-lg
+              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
+              border
+              border-black/10
+            "
+          />
+        </div>
+		<div class="mt-16 flex flex-col gap-10">
+          <img
+            src="/images/rest1.jpeg"
+            alt="Traditional dish"
+            class="
+              w-full
+              rounded-lg
+              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
+              border
+              border-black/10
+            "
+          />
+        </div>
+		<div class="mt-16 flex flex-col gap-10">
+          <img
+            src="/images/sala1.jpeg"
+            alt="Traditional dish"
+            class="
+              w-full
+              rounded-lg
+              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
+              border
+              border-black/10
+            "
+          />
+        </div>
+        <div class="mt-16 flex flex-col gap-10">
+          <img
+            src="/images/rest2.jpeg"
+            alt="Traditional dish"
+            class="
+              w-full
+              rounded-lg
+              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
+              border
+              border-black/10
+            "
+          />
+        </div>
+		<div class="mt-16 flex flex-col gap-10">
+      </div>
+    </section>
+  </main>
+</BaseLayout>

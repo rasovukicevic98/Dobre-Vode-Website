@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
 /* Small sane defaults */
-html, body {
-  height: 100%;
+html,
+body {
+  min-height: 100%;
+  background-image: url("/images/wood-bg.jpg");
+  background-repeat: repeat;
+  background-position: top center;
+
+  /* 🔑 THIS IS THE KEY */
+  background-size: auto;
+
+  /* Prevent iOS zoom illusion */
+  background-attachment: scroll;
 }
 body {
   margin: 0;
+  position: relative;
+  touch-action: pan-y;
 }

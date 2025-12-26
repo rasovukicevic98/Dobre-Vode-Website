@@ -1,0 +1,28 @@
+---
+const { currentLang, currentPath } = Astro.props;
+
+const otherLang = currentLang === "me" ? "en" : "me";
+const newPath = `/${otherLang}${currentPath.replace(/^\/(me|en)/, "")}`;
+---
+
+<div class="flex gap-2 text-sm">
+  <a
+    href={`/me${currentPath.replace(/^\/(me|en)/, "")}`}
+    class={currentLang === "me"
+      ? "font-bold underline"
+      : "opacity-60 hover:opacity-100"}
+  >
+    ME
+  </a>
+
+  <span>|</span>
+
+  <a
+    href={`/en${currentPath.replace(/^\/(me|en)/, "")}`}
+    class={currentLang === "en"
+      ? "font-bold underline"
+      : "opacity-60 hover:opacity-100"}
+  >
+    EN
+  </a>
+</div>
