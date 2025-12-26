@@ -6,12 +6,25 @@ const navItems = [
 ];
 
 const pathname = Astro.url.pathname;
-const currentLang = pathname.startsWith("/en") ? "en" : "me";
+
+// detect current language properly
+const isEn = pathname === "/en" || pathname.startsWith("/en/");
+const isMe = pathname === "/me" || pathname.startsWith("/me/");
+
+
+const currentLang = isEn ? "en" : isMe ? "me" : "me";
 const otherLang = currentLang === "me" ? "en" : "me";
 
+// remove any existing language prefix
+const cleanPath = pathname.replace(/^\/(me|en)(\/|$)/, "/");
+
+// build correct target
 const switchTo =
-  `/${otherLang}` + pathname.replace(/^\/(me|en)/, "");
+  cleanPath === "/"
+    ? `/${otherLang}`
+    : `/${otherLang}${cleanPath}`;
 ---
+
 
 <header class="mt-6 mb-10">
   <!-- WIDTH CONTAINER (same as page content) -->
