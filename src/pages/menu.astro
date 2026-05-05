@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import { menu } from "../data/menuData";
@@ -45,7 +45,7 @@ const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
         <!-- ================= FOOD ================= -->
         <details class="top-group">
           <summary class="top-summary">
-            🍽️ {t.ui.food}
+            🍽️ {t.ui.food} <span class="top-arrow">▼</span>
           </summary>
 
           {foodCategories.map(category => (
@@ -89,9 +89,9 @@ const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
         </details>
 
         <!-- ================= DRINKS ================= -->
-        <details class="top-group mt-16">
+        <details class="top-group mt-4">
           <summary class="top-summary">
-            🍷 {t.ui.drinks}
+            🍷 {t.ui.drinks} <span class="top-arrow">▼</span>
           </summary>
 
           {drinkCategories.map(category => (
@@ -170,6 +170,23 @@ const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
   color: #2a1d13;
   cursor: pointer;
   margin-bottom: 2rem;
+  text-decoration: underline;
+  text-decoration-color: rgba(91, 58, 30, 0.35);
+  text-underline-offset: 5px;
+}
+
+.top-arrow {
+  display: inline-block;
+  font-size: 0.6rem;
+  margin-left: 0.45rem;
+  color: #5b3a1e;
+  opacity: 0.6;
+  transition: transform 0.22s ease;
+  vertical-align: middle;
+}
+
+.top-group[open] > .top-summary .top-arrow {
+  transform: rotate(180deg);
 }
 
 /* ================= MENU ================= */
