@@ -4,7 +4,7 @@ export const translations = {
       title: "Restoran Dobre Vode",
       welcome: "Dobro došli u naš restoran.",
       p1: "Naša priča počinje davne 2000. godine, na obali rijeke Tare. Tada smo imali samo četiri stola, veliku želju i još veću ljubav prema domaćoj hrani i gostoprimstvu.",
-      p2: "Korak po korak, zahvaljujući vjernim gostima koji su nam se iznova vraćali, rasli smo zajedno sa njima. Danas, naš restoran može da ugosti preko 100 osoba, ali je duh sa samog početka ostao isti – toplina, iskren osmijeh i osjećaj da ste došli na pravo mjesto.",
+      p2: "Korak po korak, zahvaljujući vjernim gostima koji su nam se iznova vraćali, rasli smo zajedno sa vama. Danas, naš restoran može da ugosti preko 100 osoba, ali je duh sa samog početka ostao isti – toplina, iskren osmijeh i osjećaj da ste došli na pravo mjesto.",
       thanks: "Hvala vam što ste dio naše priče.",
     },
     contact: {

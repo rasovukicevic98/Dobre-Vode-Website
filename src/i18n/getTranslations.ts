@@ -7,6 +7,6 @@ export function getTranslations(lang: string) {
       return me;
     case "en":
     default:
-      return en;
+      return me;
   }
 }
