@@ -46,7 +46,7 @@ const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
         <!-- ================= FOOD ================= -->
         <details class="top-group">
           <summary class="top-summary">
-            🍽️ {t.ui.food}
+            🍽️ {t.ui.food} <span class="top-arrow">▼</span>
           </summary>
 
           {foodCategories.map(category => (
@@ -92,7 +92,7 @@ const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
         <!-- ================= DRINKS ================= -->
         <details class="top-group mt-4">
           <summary class="top-summary">
-            🍷 {t.ui.drinks}
+            🍷 {t.ui.drinks} <span class="top-arrow">▼</span>
           </summary>
 
           {drinkCategories.map(category => (
