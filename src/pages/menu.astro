@@ -164,12 +164,44 @@ const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
 
 /* ================= TOP LEVEL ================= */
 .top-summary {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.85rem 3rem;
+  background: linear-gradient(to bottom, #5c3317, #2b1a0a);
+  color: #f1e3d1;
   font-family: serif;
-  font-size: 1.9rem;
-  color: #2a1d13;
+  font-size: 1.35rem;
+  letter-spacing: 0.03em;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(122, 69, 32, 0.6);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
   cursor: pointer;
+  user-select: none;
+  position: relative;
   margin-bottom: 2rem;
+  transition: box-shadow 0.15s, opacity 0.15s;
+}
+
+.top-summary:hover {
+  opacity: 0.92;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.top-summary::after {
+  content: "▼";
+  position: absolute;
+  right: 1.25rem;
+  font-size: 0.75rem;
+  color: rgba(241, 227, 209, 0.5);
+  transform: rotate(-90deg);
+  transition: transform 0.25s ease;
+}
+
+.top-group[open] > .top-summary::after {
+  transform: rotate(0deg);
 }
 
 /* ================= MENU ================= */
