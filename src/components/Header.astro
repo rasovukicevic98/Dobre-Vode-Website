@@ -25,7 +25,7 @@ function isActive(href: string): boolean {
 }
 ---
 
-<header class="sticky top-0 z-50 px-4 sm:px-6 pt-4 pb-3">
+<header class="sticky top-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4 pb-2 sm:pb-3">
   <div
     class="
       mx-auto max-w-2xl
@@ -35,25 +35,23 @@ function isActive(href: string): boolean {
       shadow-[0_8px_32px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.09)]
     "
   >
-    <div
-      class="h-14 flex items-center justify-between px-5 sm:px-8"
-    >
+    <div class="h-12 sm:h-14 flex items-center px-4 sm:px-8 gap-3">
 
-      <!-- Restaurant name -->
+      <!-- Restaurant name — hidden on mobile -->
       <a
         href={`/${currentLang}`}
-        class="text-[#f1e3d1] text-xs sm:text-sm font-bold tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
+        class="hidden sm:block shrink-0 text-sm font-bold tracking-widest uppercase text-[#f1e3d1] hover:text-white transition-colors whitespace-nowrap"
       >
         Dobre Vode
       </a>
 
-      <!-- Nav links -->
-      <nav class="flex gap-5 sm:gap-8">
+      <!-- Nav links — flex-1 so they fill space and stay centered -->
+      <nav class="flex-1 flex justify-center items-center gap-4 sm:gap-8">
         {navItems.map((item) => (
           <a
             href={item.href}
             class={
-              "text-xs sm:text-sm uppercase tracking-wider font-semibold transition-colors duration-200 " +
+              "text-[11px] sm:text-sm uppercase tracking-wider font-semibold transition-colors duration-200 whitespace-nowrap " +
               (isActive(item.href)
                 ? "text-[#f1e3d1]"
                 : "text-[#f1e3d1]/50 hover:text-[#f1e3d1]/85")
@@ -67,7 +65,7 @@ function isActive(href: string): boolean {
       <!-- Language switcher -->
       <a
         href={switchTo}
-        class="text-xs font-bold tracking-widest uppercase text-[#f1e3d1]/50 hover:text-[#f1e3d1] transition-colors"
+        class="shrink-0 text-[11px] sm:text-xs font-bold tracking-widest uppercase text-[#f1e3d1]/50 hover:text-[#f1e3d1] transition-colors"
       >
         {otherLang.toUpperCase()}
       </a>
