@@ -1,33 +1,35 @@
 ---
-const navItems = [
-  { label: "O nama", href: "/" },
-  { label: "Meni", href: "/menu" },
-  { label: "Kontakt", href: "/contact" },
-];
+import { headerTranslations } from "../i18n/header";
 
 const pathname = Astro.url.pathname;
 
-// detect current language properly
+// detect current language
 const isEn = pathname === "/en" || pathname.startsWith("/en/");
 const isMe = pathname === "/me" || pathname.startsWith("/me/");
 
-
-const currentLang = isEn ? "en" : isMe ? "me" : "me";
+const currentLang = isEn ? "en" : "me";
 const otherLang = currentLang === "me" ? "en" : "me";
 
-// remove any existing language prefix
+const t = headerTranslations[currentLang];
+
+// remove existing language prefix
 const cleanPath = pathname.replace(/^\/(me|en)(\/|$)/, "/");
 
-// build correct target
+// build language switch URL
 const switchTo =
   cleanPath === "/"
     ? `/${otherLang}`
     : `/${otherLang}${cleanPath}`;
+
+// build nav items dynamically
+const navItems = [
+  { label: t.about, href: `/${currentLang}` },
+  { label: t.menu, href: `/${currentLang}/menu` },
+  { label: t.contact, href: `/${currentLang}/contact` },
+];
 ---
 
-
 <header class="mt-6 mb-10">
-  <!-- WIDTH CONTAINER (same as page content) -->
   <div
     class="mx-auto max-w-6xl px-6 sm:px-8 md:px-10"
     style="
@@ -36,66 +38,43 @@ const switchTo =
     "
   >
 
-    <!-- ROW 1: LANGUAGE (RIGHT ALIGNED) -->
+    <!-- LANGUAGE SWITCH -->
     <div class="flex justify-end mb-4">
       <a
         href={switchTo}
         class="
-          px-4 py-2
-          rounded-md
+          px-4 py-2 rounded-md
           bg-gradient-to-b from-[#3f2a16] to-[#2b1b0e]
           text-[#f1e3d1]
-          text-xs
-          font-semibold
-          tracking-wider
-          uppercase
+          text-xs font-semibold tracking-wider uppercase
           border border-black/40
           shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_4px_8px_rgba(0,0,0,0.6)]
-          hover:from-[#4a321c]
-          hover:to-[#352313]
+          hover:from-[#4a321c] hover:to-[#352313]
         "
       >
         {otherLang.toUpperCase()}
       </a>
     </div>
 
-    <!-- ROW 2: MAIN NAV (CENTERED) -->
+    <!-- NAVIGATION -->
     <nav class="flex justify-center">
       <div class="flex gap-4 sm:gap-8">
         {navItems.map((item) => (
           <a
             href={item.href}
             class="
-              px-4 sm:px-6
-              py-2 sm:py-3
+              px-4 sm:px-6 py-2 sm:py-3
               min-w-[88px] sm:min-w-[100px]
-
-              bg-gradient-to-b
-              from-[#3f2a16]
-              to-[#2b1b0e]
-
+              bg-gradient-to-b from-[#3f2a16] to-[#2b1b0e]
               text-[#f1e3d1]
-              uppercase
-              tracking-wider
-              text-xs sm:text-sm
-              font-semibold
-              text-center
-              whitespace-nowrap
-
-              rounded-md
-              border
-              border-black/40
-
+              uppercase tracking-wider
+              text-xs sm:text-sm font-semibold
+              text-center whitespace-nowrap
+              rounded-md border border-black/40
               shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_6px_12px_rgba(0,0,0,0.7)]
-
-              transition-all
-              duration-200
-
-              hover:from-[#4a321c]
-              hover:to-[#352313]
-              hover:text-[#fff1df]
-              hover:-translate-y-0.5
-
+              transition-all duration-200
+              hover:from-[#4a321c] hover:to-[#352313]
+              hover:text-[#fff1df] hover:-translate-y-0.5
               active:translate-y-0
             "
           >

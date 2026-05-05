@@ -26,7 +26,7 @@ const t = translations.en.home;
         <img
           src="/images/spec2.jpg"
           alt="Restaurant atmosphere"
-          class="w-full rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.4)] border border-black/10 mb-20"
+          class="lightbox-img w-full rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.4)] border border-black/10 mb-20 cursor-pointer"
         />
 
         <div class="space-y-9 text-[#3a2818] text-base sm:text-lg lg:text-xl leading-relaxed font-light">
@@ -42,61 +42,112 @@ const t = translations.en.home;
           </p>
         </div>
 
-        <!-- images stay unchanged -->
-                <div class="mt-16 flex flex-col gap-10">
-          <img
-            src="/images/spec1.jpg"
-            alt="Traditional dish"
-            class="
-              w-full
-              rounded-lg
-              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
-              border
-              border-black/10
-            "
-          />
-        </div>
-		<div class="mt-16 flex flex-col gap-10">
-          <img
-            src="/images/rest1.jpeg"
-            alt="Traditional dish"
-            class="
-              w-full
-              rounded-lg
-              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
-              border
-              border-black/10
-            "
-          />
-        </div>
-		<div class="mt-16 flex flex-col gap-10">
-          <img
-            src="/images/sala1.jpeg"
-            alt="Traditional dish"
-            class="
-              w-full
-              rounded-lg
-              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
-              border
-              border-black/10
-            "
-          />
-        </div>
+        <!-- IMAGES -->
         <div class="mt-16 flex flex-col gap-10">
-          <img
-            src="/images/rest2.jpeg"
-            alt="Traditional dish"
-            class="
-              w-full
-              rounded-lg
-              shadow-[0_10px_30px_rgba(0,0,0,0.4)]
-              border
-              border-black/10
-            "
-          />
+          <img src="/images/spec1.jpg" class="lightbox-img image" />
+          <img src="/images/rest1.jpeg" class="lightbox-img image" />
+          <img src="/images/sala1.jpeg" class="lightbox-img image" />
+          <img src="/images/rest2.jpeg" class="lightbox-img image" />
         </div>
-		<div class="mt-16 flex flex-col gap-10">
       </div>
     </section>
   </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox hidden">
+    <div class="lightbox-backdrop"></div>
+
+    <div class="lightbox-content">
+      <button id="lightbox-close" aria-label="Close image">✕</button>
+      <img id="lightbox-image" src="" alt="Preview" />
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+/* ================= LIGHTBOX ================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.lightbox.hidden {
+  display: none;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 2;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.8);
+}
+
+#lightbox-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: #2a1d13;
+  color: #f3e6cf;
+  border: none;
+  font-size: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.6);
+}
+
+#lightbox-close:hover {
+  background: #7a1f1f;
+}
+
+.lightbox-img {
+  cursor: zoom-in;
+}
+</style>
+
+<script>
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-image");
+  const closeBtn = document.getElementById("lightbox-close");
+  const backdrop = document.querySelector(".lightbox-backdrop");
+
+  document.querySelectorAll(".lightbox-img").forEach(img => {
+    img.addEventListener("click", () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.remove("hidden");
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.add("hidden");
+    lightboxImg.src = "";
+  }
+
+  closeBtn.addEventListener("click", closeLightbox);
+  backdrop.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+  });
+</script>

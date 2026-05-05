@@ -1,275 +1,148 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import { menu } from "../../data/menuData";
+import { menuTranslations } from "../../i18n/menu";
+import SpotlightCarousel from "../../components/SpotlightCarousel.astro";
+
+
+const { lang } = Astro.params;
+const t = menuTranslations[lang] ?? menuTranslations.en;
+
+/* SPLIT MENU DATA */
+const foodCategoryIds = Object.keys(t.categories);
+const drinkCategoryIds = Object.keys(t.drinkCategories);
+
+const foodCategories = menu.filter(c => foodCategoryIds.includes(c.id));
+const drinkCategories = menu.filter(c => drinkCategoryIds.includes(c.id));
 ---
 
-<BaseLayout title="Menu – Dobre Vode">
+<BaseLayout title={t.title}>
   <Header />
 
   <main class="mt-12 mb-24 px-4">
     <section
-      class="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto rounded-xl bg-[#f3e6cf] shadow-[0_20px_70px_rgba(0,0,0,0.6)] border border-black/10"
+      class="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl
+             mx-auto rounded-xl bg-[#f3e6cf]
+             shadow-[0_20px_70px_rgba(0,0,0,0.6)]
+             border border-black/10"
     >
       <div class="px-8 sm:px-10 md:px-12 lg:px-16 py-16 sm:py-20">
+
         <!-- TITLE -->
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif tracking-wide  text-[#7a1f1f] text-center mb-12">
-          Menu
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif tracking-wide
+                   text-[#7a1f1f] text-center mb-12">
+          {t.title}
         </h1>
 
         <!-- ======================= IZDVAJAMO ======================= -->
         <h2 class="text-xl font-serif tracking-wide text-[#2a1d13] text-center mb-6">
-          Featured
+          {t.spotlight}
         </h2>
 
-        <!-- CAROUSEL: UNCHANGED -->
-        <div class="spotlight-carousel" id="carousel">
-          <div class="carousel-item"><img src="/images/spec1.jpg" alt="" /></div>
-          <div class="carousel-item"><img src="/images/kolasinskistek.jpeg" alt="" /></div>
-          <div class="carousel-item"><img src="/images/telecepecenje.jpeg" alt="" /></div>
-          <div class="carousel-item"><img src="/images/kacamak.jpeg" alt="" /></div>
-          <div class="carousel-item"><img src="/images/cicvara.jpeg" alt="" /></div>
-        </div>
+        <SpotlightCarousel items={t.items} />
 
-        <!-- ======================= BREAKFAST ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Breakfast</summary>
-          <ul class="menu-list">
 
-            <li><details class="menu-item"><summary><span>Popara</span><span>3.60 €</span></summary><div class="menu-desc">Traditional dish made with homemade bread, cheese and butter.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Homemade pie</span><span>3.70 €</span></summary><div class="menu-desc">Homemade pie prepared using a traditional recipe.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Priganice</span><span>3.80 €</span></summary><div class="menu-desc">Traditional fried dough, soft inside and crispy outside.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Fried egg</span><span>2.10 €</span></summary><div class="menu-desc">Fresh egg fried in a pan.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Scrambled eggs</span><span>2.10 €</span></summary><div class="menu-desc">Scrambled eggs made with fresh local eggs.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Omelette with ham</span><span>3.30 €</span></summary><div class="menu-desc">Omelette filled with ham.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Omelette with pork prosciutto</span><span>3.80 €</span></summary><div class="menu-desc">Omelette with cured pork prosciutto.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Omelette with beef prosciutto</span><span>4.20 €</span></summary><div class="menu-desc">Omelette with beef prosciutto, rich in flavour.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Omelette with cheese</span><span>3.30 €</span></summary><div class="menu-desc">Omelette with local cheese.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Omelette with bacon</span><span>3.30 €</span></summary><div class="menu-desc">Omelette with fried bacon.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Vegetable omelette</span><span>3.20 €</span></summary><div class="menu-desc">Light omelette with fresh vegetables.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Ham & eggs (3 eggs, ham)</span><span>3.30 €</span></summary><div class="menu-desc">Three eggs served with ham.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Bacon & eggs (3 eggs, bacon)</span><span>3.30 €</span></summary><div class="menu-desc">Three eggs served with bacon.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Boiled egg</span><span>1.40 €</span></summary><div class="menu-desc">One boiled egg.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Savoury pancakes</span><span>3.20 €</span></summary><div class="menu-desc">Savoury pancakes with a filling of your choice.<img src="" alt="" /></div></details></li>
+        <!-- ================= FOOD ================= -->
+        <details class="top-group">
+          <summary class="top-summary">
+            🍽️ {t.ui.food}
+          </summary>
 
-          </ul>
+          {foodCategories.map(category => (
+            <details class="menu-group">
+              <summary class="menu-summary">
+                {t.categories[category.id]}
+              </summary>
+
+              <ul class="menu-list">
+                {category.items.map(item => {
+                  const itemT = t.items[item.id];
+
+                  return (
+                    <details class="menu-item">
+                      <summary>
+                        <span>
+                          {itemT.name}
+                          {item.portion && <small> ({item.portion})</small>}
+                        </span>
+                        <span>{item.price.toFixed(2)} €</span>
+                      </summary>
+
+                      {(itemT.desc || itemT.img) && (
+                        <div class="menu-desc">
+                          {itemT.desc && <p>{itemT.desc}</p>}
+                          {itemT.img && (
+                            <img
+                              src={itemT.img}
+                              alt={itemT.name}
+                              class="menu-img"
+                            />
+                          )}
+                        </div>
+                      )}
+                    </details>
+                  );
+                })}
+              </ul>
+            </details>
+          ))}
         </details>
 
-        <!-- ======================= SOUPS ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Soups</summary>
-          <ul class="menu-list">
+        <!-- ================= DRINKS ================= -->
+        <details class="top-group mt-16">
+          <summary class="top-summary">
+            🍷 {t.ui.drinks}
+          </summary>
 
-            <li><details class="menu-item"><summary><span>Chicken soup</span><span>2.20 €</span></summary><div class="menu-desc">Light soup made with chicken and vegetables.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Veal stew soup</span><span>2.60 €</span></summary><div class="menu-desc">Hearty soup with pieces of veal.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Fish soup</span><span>2.80 €</span></summary><div class="menu-desc">Soup made with river fish and spices.<img src="" alt="" /></div></details></li>
+          {drinkCategories.map(category => (
+            <details class="menu-group">
+              <summary class="menu-summary">
+                {t.drinkCategories[category.id]}
+              </summary>
 
-          </ul>
-        </details>
+              <ul class="menu-list">
+                {category.items.map(item => {
+                  const itemT = t.items[item.id];
 
-        <!-- ======================= ROAST ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Roast</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Roast veal</span><span>2.20 €</span></summary><div class="menu-desc">Roast veal.<img src="/images/telecepecenje.jpeg" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Roast lamb</span><span>2.60 €</span></summary><div class="menu-desc">Roast lamb.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= FISH ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Fish</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Grilled trout</span><span>7.90 €</span></summary><div class="menu-desc">Fresh trout grilled to perfection.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Trout stuffed with kajmak</span><span>9.60 €</span></summary><div class="menu-desc">Trout stuffed with traditional kajmak cream.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Smoked trout (boneless)</span><span>12.70 €</span></summary><div class="menu-desc">Smoked trout served boneless.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= SANDWICHES ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Sandwiches</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Ham sandwich</span><span>3.40 €</span></summary><div class="menu-desc">Warm sandwich with ham.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Sandwich with pork prosciutto</span><span>3.90 €</span></summary><div class="menu-desc">Sandwich with cured pork prosciutto.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Sandwich with beef prosciutto</span><span>4.30 €</span></summary><div class="menu-desc">Sandwich with beef prosciutto.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Cheese sandwich</span><span>3.10 €</span></summary><div class="menu-desc">Sandwich with cheese.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Kajmak sandwich</span><span>3.20 €</span></summary><div class="menu-desc">Sandwich with traditional kajmak cream.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Hamburger</span><span>4.50 €</span></summary><div class="menu-desc">Classic beef burger.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= COLD APPETIZERS ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Cold starters</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Dobre Vode platter</span><span>9.50 €</span></summary><div class="menu-desc">Selection of cured meats and cheeses.<img src="/images/ordever.jpeg" alt="Ordever" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Njeguši prosciutto</span><span>6.80 €</span></summary><div class="menu-desc">Traditional Montenegrin prosciutto.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Beef prosciutto</span><span>7.50 €</span></summary><div class="menu-desc">Cured beef prosciutto.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Kolašin layered cheese</span><span>4.20 €</span></summary><div class="menu-desc">Traditional layered cheese from Kolašin.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Homemade kajmak</span><span>3.80 €</span></summary><div class="menu-desc">Homemade kajmak with a rich flavour.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Sour milk</span><span>2.00 €</span></summary><div class="menu-desc">Homemade sour milk.<img src="/images/kisjelomlijeko.jpeg" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Fresh milk</span><span>1.80 €</span></summary><div class="menu-desc">A glass of fresh milk.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= HOT APPETIZERS ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Hot starters</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Breaded cheese</span><span>4.60 €</span></summary><div class="menu-desc">Cheese breaded and fried until golden.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Grilled vegetables</span><span>4.20 €</span></summary><div class="menu-desc">Mixed grilled vegetables.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= READY-MADE DISHES ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Cooked dishes</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Steamed lamb</span><span>11.90 €</span></summary><div class="menu-desc">Lamb prepared steamed and tender.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Veal tenderloin in kajmak sauce</span><span>10.80 €</span></summary><div class="menu-desc">Veal tenderloin in a creamy kajmak sauce.<img src="/images/teletinanakajmaku.jpg" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Beef goulash</span><span>7.90 €</span></summary><div class="menu-desc">Traditional beef goulash.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Tripe in sauce</span><span>6.90 €</span></summary><div class="menu-desc">Traditional tripe served in rich sauce.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Kastradina (smoked mutton)</span><span>8.50 €</span></summary><div class="menu-desc">Smoked mutton speciality.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Pork knuckles</span><span>9.90 €</span></summary><div class="menu-desc">Roasted pork knuckles.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= HOUSE SPECIALTIES ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Restaurant specialties</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Dobre Vode specialty</span><span>14.90 €</span></summary><div class="menu-desc">House specialty.<img src="/images/spec1.jpg" alt="Specijalitet Dobre Vode" /></div></details></li>
-            <li><details class="menu-item"><summary><span>“Sabljа” on the grill</span><span>16.50 €</span></summary><div class="menu-desc">“Sabljа” grilled specialty.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Kolašin steak</span><span>16.50 €</span></summary><div class="menu-desc">Steak stuffed with cheese, kajmak, cured meat and other secret ingredients...<img src="/images/kolasinskistek.jpeg" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= TRADITIONAL SPECIALTIES ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Traditional specialties</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Lamb in varenika</span><span>13.50 €</span></summary><div class="menu-desc">Lamb cooked in varenika (reduced milk).<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Kačamak (potato)</span><span>4.50 €</span></summary><div class="menu-desc">Traditional kačamak.<img src="/images/kacamak.jpeg" alt="Kacamak" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Cicvara (gotovac)</span><span>5.20 €</span></summary><div class="menu-desc">Cicvara with cheese.<img src="/images/cicvara.jpeg" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Country-style meat</span><span>9.80 €</span></summary><div class="menu-desc">Mixed meat with vegetables.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Homemade flatbread</span><span>1.20 €</span></summary><div class="menu-desc">Fresh homemade flatbread.<img src="/images/lepinja.jpeg" alt="Lepinja" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Proja (cornbread)</span><span>1.50 €</span></summary><div class="menu-desc">Traditional cornbread.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Rye bread</span><span>1.40 €</span></summary><div class="menu-desc">Rye bread.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= MADE TO ORDER ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Made to order</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Popeci (Podgorica style)</span><span>8.90 €</span></summary><div class="menu-desc">Stuffed cutlets prepared in a traditional way.<img src="/images/popeci.jpeg" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Viennese schnitzel</span><span>8.20 €</span></summary><div class="menu-desc">Breaded Viennese schnitzel.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Karađorđe schnitzel</span><span>9.50 €</span></summary><div class="menu-desc">Stuffed Karađorđe schnitzel.<img src="/images/karadjordjeva.jpeg" alt="Karađorđeva šnicla" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Small Karađorđe schnitzel</span><span>7.50 €</span></summary><div class="menu-desc">Smaller portion of Karađorđe schnitzel.<img src="/images/karadjordjeva.jpeg" alt="Karađorđeva šnicla" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Breaded veal</span><span>9.20 €</span></summary><div class="menu-desc">Breaded veal.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Sesame chicken</span><span>9.20 €</span></summary><div class="menu-desc">Chicken coated in sesame.<img src="/images/susampiletina.jpg" alt="Susam piletina" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= GRILL ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Grill</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Smoked pork loin (vešalica)</span><span>8.90 €</span></summary><div class="menu-desc">Smoked pork loin from the grill.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>White pork loin (vešalica)</span><span>8.50 €</span></summary><div class="menu-desc">Classic grilled pork loin.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Smoked white pork loin</span><span>9.20 €</span></summary><div class="menu-desc">Smoked white pork loin from the grill.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Stuffed pork loin</span><span>9.80 €</span></summary><div class="menu-desc">Pork loin stuffed with cheese.<img src="/images/punjenavjesalica.jpeg" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Rolled pork loin</span><span>9.60 €</span></summary><div class="menu-desc">Rolled pork loin with filling.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Grilled skewers</span><span>7.80 €</span></summary><div class="menu-desc">Skewers grilled to perfection.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Stuffed skewers</span><span>8.50 €</span></summary><div class="menu-desc">Stuffed skewers.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Gourmet pljeskavica</span><span>7.20 €</span></summary><div class="menu-desc">Traditional “pljeskavica” with spices.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Smoked sausage</span><span>6.80 €</span></summary><div class="menu-desc">Homemade smoked sausage.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Chicken rolls in bacon</span><span>8.40 €</span></summary><div class="menu-desc">Chicken skewers wrapped in bacon.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Gourmet uštipci</span><span>7.00 €</span></summary><div class="menu-desc">Gourmet uštipci with cheese.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Pork neck</span><span>7.50 €</span></summary><div class="menu-desc">Grilled pork neck.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Stuffed drumsticks</span><span>7.90 €</span></summary><div class="menu-desc">Chicken drumsticks stuffed with cheese.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Grilled beef steak (biftek)</span><span>16.90 €</span></summary><div class="menu-desc">Beef steak from the grill.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Grilled bacon</span><span>5.50 €</span></summary><div class="menu-desc">Bacon grilled to perfection.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= SIDES ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Sides</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Mushroom sauce</span><span>2.20 €</span></summary><div class="menu-desc">Mushroom sauce.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Sour cream</span><span>1.80 €</span></summary><div class="menu-desc">Sour cream.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Boiled potatoes</span><span>2.50 €</span></summary><div class="menu-desc">Boiled potatoes.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>French fries</span><span>2.80 €</span></summary><div class="menu-desc">French fries.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Four-cheese selection</span><span>4.50 €</span></summary><div class="menu-desc">Selection of four cheeses.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Dalmatian vegetable stew</span><span>3.80 €</span></summary><div class="menu-desc">Vegetable stew.<img src="" alt="" /></div></details></li>
-
-          </ul>
-        </details>
-
-        <!-- ======================= SALADS ======================= -->
-        <details class="menu-group">
-          <summary class="menu-summary">Salads</summary>
-          <ul class="menu-list">
-
-            <li><details class="menu-item"><summary><span>Šopska salad</span><span>3.20 €</span></summary><div class="menu-desc">Tomato, cucumber and cheese.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Serbian salad</span><span>3.10 €</span></summary><div class="menu-desc">Tomato, onion and pepper.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Garden (vitamin) salad</span><span>3.50 €</span></summary><div class="menu-desc">Fresh seasonal vegetables.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Cucumber</span><span>2.20 €</span></summary><div class="menu-desc">Fresh cucumber.<img src="" alt="" /></div></details></li>
-            <li><details class="menu-item"><summary><span>Tomato</span><span>2.20 €</span></summary><div class="menu-desc">Fresh tomato.<img src="" alt="" /></div></details></li>
-
-          </ul>
+                  return (
+                    <li class="menu-drink">
+                      <span>
+                        {itemT.name}
+                        {item.portion && <small> ({item.portion})</small>}
+                      </span>
+                      <span>{item.price.toFixed(2)} €</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          ))}
         </details>
 
       </div>
     </section>
   </main>
 </BaseLayout>
+
 <style>
 /* =================== CAROUSEL =================== */
 .spotlight-carousel {
   position: relative;
-  height: 360px;
+  height: 390px;
   margin-bottom: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-
-  /* 🔑 FIX */
-  touch-action: pan-y;
-  overscroll-behavior: contain;
-  user-select: none;
 }
 
 .carousel-item {
   position: absolute;
-  transition:
-    transform 0.45s ease,
-    opacity 0.45s ease,
-    filter 0.45s ease;
-  cursor: pointer;
+  transition: transform .45s ease, opacity .45s ease, filter .45s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .carousel-item img {
@@ -278,44 +151,38 @@ import Header from "../../components/Header.astro";
   object-fit: cover;
   border-radius: 1rem;
   box-shadow: 0 18px 40px rgba(0,0,0,.45);
-
-  /* 🔑 FIX */
-  -webkit-user-drag: none;
   user-select: none;
   pointer-events: none;
 }
 
-@media (max-width: 640px) {
-  .carousel-item img {
-    width: 210px;
-    height: 290px;
-  }
+.carousel-caption {
+  margin-top: .75rem;
+  font-family: serif;
+  font-size: .95rem;
+  color: #2a1d13;
+  opacity: .9;
 }
 
-/* =================== MENU =================== */
-summary {
-  list-style: none;
+/* ================= TOP LEVEL ================= */
+.top-summary {
+  text-align: center;
+  font-family: serif;
+  font-size: 1.9rem;
+  color: #2a1d13;
   cursor: pointer;
+  margin-bottom: 2rem;
 }
 
-summary::-webkit-details-marker {
-  display: none;
-}
+/* ================= MENU ================= */
+summary { list-style: none; cursor: pointer; }
+summary::-webkit-details-marker { display: none; }
 
-details > summary {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.menu-group {
-  margin-bottom: 3rem;
-  contain: layout paint;
-}
+.menu-group { margin-bottom: 2.5rem; }
 
 .menu-summary {
   position: relative;
   padding-left: 2rem;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-family: serif;
   color: #2a1d13;
 }
@@ -329,11 +196,6 @@ details > summary {
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
   border-left: 10px solid #5b3a1e;
-  transition: transform .25s ease;
-}
-
-details[open] > .menu-summary::before {
-  transform: translateY(-50%) rotate(90deg);
 }
 
 .menu-list {
@@ -344,131 +206,60 @@ details[open] > .menu-summary::before {
 }
 
 .menu-item summary {
-  position: relative;
-  padding-left: 1.4rem;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: .75rem;
-  color: #3a2818;
-  font-weight: 500;
-}
-
-.menu-item summary::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 6px solid #7a5a3a;
-  transition: transform .2s ease;
-}
-
-.menu-item[open] summary::before {
-  transform: translateY(-50%) rotate(90deg);
+  padding-left: 1.4rem;
 }
 
 .menu-desc {
-  margin-top: .45rem;
   margin-left: .75rem;
   padding-left: .75rem;
   font-size: .9rem;
   font-style: italic;
-  line-height: 1.5;
-  color: #5a4634;
   border-left: 2px solid rgba(90,70,52,.25);
 }
+
+.menu-img {
+  margin-top: .6rem;
+  max-width: 100%;
+  border-radius: .5rem;
+}
+
+.menu-drink {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding-left: 1.4rem;
+}
 </style>
+
 <script>
   const carousel = document.getElementById("carousel");
-  const items = Array.from(carousel.querySelectorAll(".carousel-item"));
-  const total = items.length;
-
-  let activeIndex = Math.floor(total / 2);
+  const items = [...carousel.querySelectorAll(".carousel-item")];
+  let activeIndex = Math.floor(items.length / 2);
 
   function distance() {
     return window.innerWidth < 640 ? 140 : 260;
   }
 
-  function getOffset(index) {
-    let diff = index - activeIndex;
-
-    // 🔁 WRAP AROUND (THIS MAKES IT INFINITE)
-    if (diff > total / 2) diff -= total;
-    if (diff < -total / 2) diff += total;
-
-    return diff;
-  }
-
   function update() {
     const d = distance();
-
     items.forEach((item, i) => {
-      const offset = getOffset(i);
-      const abs = Math.abs(offset);
-
+      const offset = i - activeIndex;
       item.style.transform =
-        `translateX(${offset * d}px) scale(${offset === 0 ? 1 : 0.82})`;
-
-      item.style.opacity = abs > 2 ? "0" : offset === 0 ? "1" : "0.45";
+        `translateX(${offset * d}px) scale(${offset === 0 ? 1 : .82})`;
+      item.style.opacity = offset === 0 ? "1" : "0.45";
       item.style.filter = offset === 0 ? "brightness(1)" : "brightness(.7)";
-      item.style.zIndex = 20 - abs;
-      item.style.pointerEvents = offset === 0 ? "none" : "auto";
+      item.style.zIndex = offset === 0 ? "20" : "10";
     });
   }
 
-  // CLICK
   items.forEach((item, i) =>
     item.addEventListener("click", () => {
       activeIndex = i;
       update();
     })
   );
-
-  // TOUCH (INFINITE)
-  let startX = null;
-  let startY = null;
-  let isHorizontal = null;
-
-  carousel.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isHorizontal = null;
-  }, { passive: true });
-
-  carousel.addEventListener("touchmove", (e) => {
-    if (startX == null || startY == null) return;
-
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
-
-    if (isHorizontal === null) {
-      isHorizontal = Math.abs(dx) > Math.abs(dy);
-    }
-
-    if (isHorizontal) e.preventDefault();
-  }, { passive: false });
-
-  carousel.addEventListener("touchend", (e) => {
-    if (!isHorizontal || startX == null) {
-      startX = startY = null;
-      return;
-    }
-
-    const diff = startX - e.changedTouches[0].clientX;
-
-    if (diff > 50) {
-      // swipe left → next
-      activeIndex = (activeIndex + 1) % total;
-    } else if (diff < -50) {
-      // swipe right → prev
-      activeIndex = (activeIndex - 1 + total) % total;
-    }
-
-    update();
-    startX = startY = isHorizontal = null;
-  });
 
   window.addEventListener("resize", update);
   update();

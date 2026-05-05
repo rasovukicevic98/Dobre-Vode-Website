@@ -1,0 +1,258 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LanguageSelector from "../../components/LanguageSelector.astro";
+import { translations } from "../../i18n/translations";
+
+const t = translations.en.review;
+
+const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/place/Restoran+Dobre+Vode/@42.8882674,19.5361182,17z/data=!3m1!4b1!4m6!3m5!1s0x134d62eddd1b7243:0xe0e114344b15e608!8m2!3d42.8882635!4d19.5386985!16s%2Fg%2F1tl6mgz7?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
+---
+
+<BaseLayout title="Restaurant Dobre Vode – Review">
+  <div class="mt-6 mb-4 flex justify-end px-6 sm:px-8 md:px-10 text-white font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+    <LanguageSelector currentLang="en" currentPath="/en/review" />
+  </div>
+
+  <form name="review" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="overall" />
+    <input name="food" />
+    <input name="service" />
+    <input name="atmosphere" />
+    <textarea name="comment"></textarea>
+    <input name="name" />
+    <input name="email" />
+  </form>
+
+  <main class="py-14 px-4">
+    <div class="max-w-md mx-auto space-y-4">
+
+      <!-- ─── STEP 1: Overall star pick ─── -->
+      <div id="step-rating" class="bg-[#f3e6cf] rounded-xl border border-black/10 shadow-[0_20px_70px_rgba(0,0,0,0.6)] p-8 sm:p-10 text-center">
+        <div class="w-20 h-20 mx-auto mb-5 rounded-full overflow-hidden border-2 border-[#7a1f1f]/30 shadow-md">
+          <img src="/images/rest1.jpeg" alt="Dobre Vode" class="w-full h-full object-cover" />
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-[#7a1f1f] mb-1">Restaurant Dobre Vode</h1>
+        <p class="text-xs text-[#8a6a4a] uppercase tracking-widest mb-8">{t.tagline}</p>
+        <p class="text-[#3a2818] text-base sm:text-lg mb-6">{t.question}</p>
+        <div id="overall-stars" class="flex justify-center gap-3 mb-3"></div>
+        <p id="overall-label" class="text-sm text-[#8a6a4a] h-5"></p>
+      </div>
+
+      <!-- ─── STEP 2: Detailed form ─── -->
+      <div id="step-form" class="hidden bg-[#f3e6cf] rounded-xl border border-black/10 shadow-[0_20px_70px_rgba(0,0,0,0.6)] p-8 sm:p-10">
+        <h2 class="text-xl font-bold text-[#7a1f1f] text-center mb-1">{t.formTitle}</h2>
+        <p class="text-xs text-[#8a6a4a] text-center mb-8">{t.formSubtitle}</p>
+
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#c9a87a]/40">
+          <span class="text-sm font-semibold text-[#3a2818] uppercase tracking-wider">{t.overall}</span>
+          <div id="overall-display" class="flex gap-1"></div>
+        </div>
+
+        <div class="space-y-5 mb-8">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-semibold text-[#3a2818] uppercase tracking-wider">{t.food}</span>
+              <div class="flex gap-1 category-stars" data-for="food"></div>
+            </div>
+            <div class="h-px bg-[#c9a87a]/30"></div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-semibold text-[#3a2818] uppercase tracking-wider">{t.service}</span>
+              <div class="flex gap-1 category-stars" data-for="service"></div>
+            </div>
+            <div class="h-px bg-[#c9a87a]/30"></div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-semibold text-[#3a2818] uppercase tracking-wider">{t.atmosphere}</span>
+              <div class="flex gap-1 category-stars" data-for="atmosphere"></div>
+            </div>
+            <div class="h-px bg-[#c9a87a]/30"></div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-xs font-semibold text-[#3a2818] uppercase tracking-wider mb-2">
+            {t.reviewLabel}
+          </label>
+          <textarea
+            id="comment"
+            placeholder={t.reviewPlaceholder}
+            rows="4"
+            class="w-full rounded-lg border border-[#c9a87a] bg-[#fdf6ec] px-4 py-3 text-sm text-[#3a2818] placeholder-[#b89a72] focus:outline-none focus:border-[#7a1f1f] resize-none"
+          ></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-xs font-semibold text-[#3a2818] uppercase tracking-wider mb-2">
+            {t.nameLabel}
+            <span class="font-normal normal-case text-[#8a6a4a] ml-1">{t.optional}</span>
+          </label>
+          <input
+            id="reviewer-name"
+            type="text"
+            placeholder={t.namePlaceholder}
+            class="w-full rounded-lg border border-[#c9a87a] bg-[#fdf6ec] px-4 py-3 text-sm text-[#3a2818] placeholder-[#b89a72] focus:outline-none focus:border-[#7a1f1f]"
+          />
+        </div>
+
+        <div class="mb-8">
+          <label class="block text-xs font-semibold text-[#3a2818] uppercase tracking-wider mb-2">
+            {t.emailLabel}
+            <span class="font-normal normal-case text-[#8a6a4a] ml-1">{t.optionalContact}</span>
+          </label>
+          <input
+            id="reviewer-email"
+            type="email"
+            placeholder={t.emailPlaceholder}
+            class="w-full rounded-lg border border-[#c9a87a] bg-[#fdf6ec] px-4 py-3 text-sm text-[#3a2818] placeholder-[#b89a72] focus:outline-none focus:border-[#7a1f1f]"
+          />
+        </div>
+
+        <p id="form-error" class="hidden text-red-700 text-xs text-center mb-3">{t.error}</p>
+
+        <button
+          id="submit-btn"
+          class="w-full py-3 rounded-lg
+            bg-gradient-to-b from-[#3f2a16] to-[#2b1b0e]
+            text-[#f1e3d1] font-semibold uppercase tracking-widest text-sm
+            border border-black/40
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_6px_12px_rgba(0,0,0,0.7)]
+            hover:from-[#4a321c] hover:to-[#352313] hover:text-[#fff1df]
+            active:translate-y-0.5 transition-all duration-150"
+        >
+          {t.submit}
+        </button>
+      </div>
+
+      <!-- ─── STEP 3: Thank you ─── -->
+      <div id="step-thanks" class="hidden bg-[#f3e6cf] rounded-xl border border-black/10 shadow-[0_20px_70px_rgba(0,0,0,0.6)] p-10 text-center">
+        <svg class="w-14 h-14 mx-auto mb-5 text-[#7a1f1f]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="text-2xl font-bold text-[#7a1f1f] mb-3">{t.thanksTitle}</h2>
+        <p class="text-[#3a2818] text-base leading-relaxed">{t.thanksBody}</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script define:vars={{ GOOGLE_MAPS_URL, LABELS: t.labels }}>
+    const state = { overall: 0, food: 0, service: 0, atmosphere: 0 };
+
+    function starPath(filled) {
+      const c = filled ? "#e8a020" : "#c9a87a";
+      return `<svg viewBox="0 0 24 24" fill="${c}" xmlns="http://www.w3.org/2000/svg" style="display:block">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77 5.82 21l1.18-6.88L2 9.27l6.91-1.01L12 2z"/>
+      </svg>`;
+    }
+
+    function buildStars(container, category, sizePx) {
+      container.innerHTML = "";
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.style.cssText = `width:${sizePx}px;height:${sizePx}px;transition:transform 0.1s;`;
+        btn.dataset.val = i;
+        btn.innerHTML = starPath(i <= state[category]);
+        btn.addEventListener("mouseenter", () => previewStars(container, i, sizePx));
+        btn.addEventListener("mouseleave", () => renderStars(container, category, sizePx));
+        btn.addEventListener("click", () => {
+          state[category] = i;
+          renderStars(container, category, sizePx);
+          if (category === "overall") handleOverall(i);
+        });
+        container.appendChild(btn);
+      }
+    }
+
+    function previewStars(container, upTo, sizePx) {
+      [...container.children].forEach((btn, idx) => {
+        btn.innerHTML = starPath(idx < upTo);
+        btn.style.transform = idx < upTo ? "scale(1.12)" : "scale(1)";
+      });
+    }
+
+    function renderStars(container, category, sizePx) {
+      [...container.children].forEach((btn, idx) => {
+        btn.innerHTML = starPath(idx < state[category]);
+        btn.style.transform = "scale(1)";
+      });
+    }
+
+    function handleOverall(rating) {
+      if (rating === 5) {
+        window.location.href = GOOGLE_MAPS_URL;
+        return;
+      }
+      document.getElementById("overall-label").textContent = LABELS[rating];
+
+      const display = document.getElementById("overall-display");
+      display.innerHTML = "";
+      for (let i = 1; i <= 5; i++) {
+        const s = document.createElement("span");
+        s.style.cssText = "width:18px;height:18px;display:inline-block;";
+        s.innerHTML = starPath(i <= rating);
+        display.appendChild(s);
+      }
+
+      setTimeout(() => {
+        document.getElementById("step-rating").classList.add("hidden");
+        document.getElementById("step-form").classList.remove("hidden");
+      }, 350);
+    }
+
+    const overallContainer = document.getElementById("overall-stars");
+    buildStars(overallContainer, "overall", 38);
+
+    overallContainer.addEventListener("mouseover", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) document.getElementById("overall-label").textContent = LABELS[btn.dataset.val] || "";
+    });
+    overallContainer.addEventListener("mouseleave", () => {
+      document.getElementById("overall-label").textContent = state.overall ? LABELS[state.overall] : "";
+    });
+
+    document.querySelectorAll(".category-stars").forEach((container) => {
+      buildStars(container, container.dataset.for, 22);
+    });
+
+    document.getElementById("submit-btn").addEventListener("click", async () => {
+      const comment = document.getElementById("comment").value.trim();
+      const name = document.getElementById("reviewer-name").value.trim();
+      const email = document.getElementById("reviewer-email").value.trim();
+      const error = document.getElementById("form-error");
+
+      if (!comment) {
+        error.classList.remove("hidden");
+        return;
+      }
+      error.classList.add("hidden");
+
+      const payload = new URLSearchParams({
+        "form-name": "review",
+        overall: state.overall,
+        food: state.food,
+        service: state.service,
+        atmosphere: state.atmosphere,
+        comment,
+        name,
+        email,
+      });
+
+      try {
+        await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: payload.toString(),
+        });
+      } catch (_) {}
+
+      document.getElementById("step-form").classList.add("hidden");
+      document.getElementById("step-thanks").classList.remove("hidden");
+    });
+  </script>
+</BaseLayout>
