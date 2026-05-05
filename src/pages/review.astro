@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LanguageSelector from "../components/LanguageSelector.astro";
 import { translations } from "../i18n/translations";
@@ -193,21 +193,43 @@ const GOOGLE_MAPS_URL =
       });
     }
 
+    function buildOverallDisplay(rating) {
+      const display = document.getElementById("overall-display");
+      display.innerHTML = "";
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.style.cssText = "width:22px;height:22px;transition:transform 0.1s;";
+        btn.dataset.val = i;
+        btn.innerHTML = starPath(i <= rating);
+        btn.addEventListener("mouseenter", () => {
+          [...display.children].forEach((b, idx) => {
+            b.innerHTML = starPath(idx < i);
+            b.style.transform = idx < i ? "scale(1.15)" : "scale(1)";
+          });
+        });
+        btn.addEventListener("mouseleave", () => {
+          [...display.children].forEach((b, idx) => {
+            b.innerHTML = starPath(idx < state.overall);
+            b.style.transform = "scale(1)";
+          });
+        });
+        btn.addEventListener("click", () => {
+          state.overall = i;
+          buildOverallDisplay(i);
+          if (i === 5) window.location.href = GOOGLE_MAPS_URL;
+        });
+        display.appendChild(btn);
+      }
+    }
+
     function handleOverall(rating) {
       if (rating === 5) {
         window.location.href = GOOGLE_MAPS_URL;
         return;
       }
       document.getElementById("overall-label").textContent = LABELS[rating];
-
-      const display = document.getElementById("overall-display");
-      display.innerHTML = "";
-      for (let i = 1; i <= 5; i++) {
-        const s = document.createElement("span");
-        s.style.cssText = "width:18px;height:18px;display:inline-block;";
-        s.innerHTML = starPath(i <= rating);
-        display.appendChild(s);
-      }
+      buildOverallDisplay(rating);
 
       setTimeout(() => {
         document.getElementById("step-rating").classList.add("hidden");
