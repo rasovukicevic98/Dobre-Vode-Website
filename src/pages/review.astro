@@ -165,16 +165,18 @@ const GOOGLE_MAPS_URL =
       for (let i = 1; i <= 5; i++) {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.style.cssText = `width:${sizePx}px;height:${sizePx}px;transition:transform 0.1s;touch-action:manipulation;cursor:pointer;`;
         btn.dataset.val = i;
+        btn.setAttribute("aria-label", `${i} star`);
+        btn.style.cssText = `width:${sizePx}px;height:${sizePx}px;transition:transform 0.1s;touch-action:manipulation;cursor:pointer;position:relative;z-index:20;background:transparent;border:0;padding:0;`;
         btn.innerHTML = starPath(i <= state[category]);
         btn.addEventListener("mouseenter", () => previewStars(container, i, sizePx));
         btn.addEventListener("mouseleave", () => renderStars(container, category, sizePx));
-        btn.addEventListener("click", () => {
-          state[category] = i;
-          renderStars(container, category, sizePx);
-          if (category === "overall") handleOverall(i);
-        });
+        if (category !== "overall") {
+          btn.addEventListener("click", () => {
+            state[category] = i;
+            renderStars(container, category, sizePx);
+          });
+        }
         container.appendChild(btn);
       }
     }
@@ -239,6 +241,15 @@ const GOOGLE_MAPS_URL =
 
     const overallContainer = document.getElementById("overall-stars");
     buildStars(overallContainer, "overall", 38);
+
+    overallContainer.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const rating = Number(btn.dataset.val);
+      state.overall = rating;
+      renderStars(overallContainer, "overall", 38);
+      handleOverall(rating);
+    });
 
     overallContainer.addEventListener("mouseover", (e) => {
       const btn = e.target.closest("button");
