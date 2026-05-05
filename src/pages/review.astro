@@ -155,7 +155,7 @@ const GOOGLE_MAPS_URL =
 
     function starPath(filled) {
       const c = filled ? "#e8a020" : "#c9a87a";
-      return `<svg viewBox="0 0 24 24" fill="${c}" xmlns="http://www.w3.org/2000/svg" style="display:block">
+      return `<svg viewBox="0 0 24 24" fill="${c}" xmlns="http://www.w3.org/2000/svg" style="display:block;pointer-events:none">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77 5.82 21l1.18-6.88L2 9.27l6.91-1.01L12 2z"/>
       </svg>`;
     }
@@ -165,7 +165,7 @@ const GOOGLE_MAPS_URL =
       for (let i = 1; i <= 5; i++) {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.style.cssText = `width:${sizePx}px;height:${sizePx}px;transition:transform 0.1s;`;
+        btn.style.cssText = `width:${sizePx}px;height:${sizePx}px;transition:transform 0.1s;touch-action:manipulation;cursor:pointer;`;
         btn.dataset.val = i;
         btn.innerHTML = starPath(i <= state[category]);
         btn.addEventListener("mouseenter", () => previewStars(container, i, sizePx));
@@ -199,7 +199,7 @@ const GOOGLE_MAPS_URL =
       for (let i = 1; i <= 5; i++) {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.style.cssText = "width:22px;height:22px;transition:transform 0.1s;";
+        btn.style.cssText = "width:22px;height:22px;transition:transform 0.1s;touch-action:manipulation;cursor:pointer;";
         btn.dataset.val = i;
         btn.innerHTML = starPath(i <= rating);
         btn.addEventListener("mouseenter", () => {
