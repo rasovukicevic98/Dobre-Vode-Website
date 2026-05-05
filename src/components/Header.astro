@@ -3,86 +3,75 @@ import { headerTranslations } from "../i18n/header";
 
 const pathname = Astro.url.pathname;
 
-// detect current language
 const isEn = pathname === "/en" || pathname.startsWith("/en/");
-const isMe = pathname === "/me" || pathname.startsWith("/me/");
-
 const currentLang = isEn ? "en" : "me";
 const otherLang = currentLang === "me" ? "en" : "me";
 
 const t = headerTranslations[currentLang];
 
-// remove existing language prefix
 const cleanPath = pathname.replace(/^\/(me|en)(\/|$)/, "/");
+const switchTo = cleanPath === "/" ? `/${otherLang}` : `/${otherLang}${cleanPath}`;
 
-// build language switch URL
-const switchTo =
-  cleanPath === "/"
-    ? `/${otherLang}`
-    : `/${otherLang}${cleanPath}`;
-
-// build nav items dynamically
 const navItems = [
-  { label: t.about, href: `/${currentLang}` },
-  { label: t.menu, href: `/${currentLang}/menu` },
+  { label: t.about,   href: `/${currentLang}` },
+  { label: t.menu,    href: `/${currentLang}/menu` },
   { label: t.contact, href: `/${currentLang}/contact` },
 ];
+
+function isActive(href: string): boolean {
+  const root = `/${currentLang}`;
+  if (href === root) return pathname === root || pathname === root + "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
 ---
 
-<header class="mt-6 mb-10">
+<header class="sticky top-0 z-50 px-4 sm:px-6 pt-4 pb-3">
   <div
-    class="mx-auto max-w-6xl px-6 sm:px-8 md:px-10"
-    style="
-      padding-left: max(1.5rem, env(safe-area-inset-left));
-      padding-right: max(1.5rem, env(safe-area-inset-right));
+    class="
+      mx-auto max-w-2xl
+      bg-gradient-to-b from-[#5c3317] to-[#2b1a0a]
+      rounded-2xl
+      border border-[#7a4520]/70
+      shadow-[0_8px_32px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.09)]
     "
   >
+    <div
+      class="h-14 flex items-center justify-between px-5 sm:px-8"
+    >
 
-    <!-- LANGUAGE SWITCH -->
-    <div class="flex justify-end mb-4">
+      <!-- Restaurant name -->
       <a
-        href={switchTo}
-        class="
-          px-4 py-2 rounded-md
-          bg-gradient-to-b from-[#3f2a16] to-[#2b1b0e]
-          text-[#f1e3d1]
-          text-xs font-semibold tracking-wider uppercase
-          border border-black/40
-          shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_4px_8px_rgba(0,0,0,0.6)]
-          hover:from-[#4a321c] hover:to-[#352313]
-        "
+        href={`/${currentLang}`}
+        class="text-[#f1e3d1] text-xs sm:text-sm font-bold tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
       >
-        {otherLang.toUpperCase()}
+        Dobre Vode
       </a>
-    </div>
 
-    <!-- NAVIGATION -->
-    <nav class="flex justify-center">
-      <div class="flex gap-4 sm:gap-8">
+      <!-- Nav links -->
+      <nav class="flex gap-5 sm:gap-8">
         {navItems.map((item) => (
           <a
             href={item.href}
-            class="
-              px-4 sm:px-6 py-2 sm:py-3
-              min-w-[88px] sm:min-w-[100px]
-              bg-gradient-to-b from-[#3f2a16] to-[#2b1b0e]
-              text-[#f1e3d1]
-              uppercase tracking-wider
-              text-xs sm:text-sm font-semibold
-              text-center whitespace-nowrap
-              rounded-md border border-black/40
-              shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_6px_12px_rgba(0,0,0,0.7)]
-              transition-all duration-200
-              hover:from-[#4a321c] hover:to-[#352313]
-              hover:text-[#fff1df] hover:-translate-y-0.5
-              active:translate-y-0
-            "
+            class={
+              "text-xs sm:text-sm uppercase tracking-wider font-semibold transition-colors duration-200 " +
+              (isActive(item.href)
+                ? "text-[#f1e3d1]"
+                : "text-[#f1e3d1]/50 hover:text-[#f1e3d1]/85")
+            }
           >
             {item.label}
           </a>
         ))}
-      </div>
-    </nav>
+      </nav>
 
+      <!-- Language switcher -->
+      <a
+        href={switchTo}
+        class="text-xs font-bold tracking-widest uppercase text-[#f1e3d1]/50 hover:text-[#f1e3d1] transition-colors"
+      >
+        {otherLang.toUpperCase()}
+      </a>
+
+    </div>
   </div>
 </header>
