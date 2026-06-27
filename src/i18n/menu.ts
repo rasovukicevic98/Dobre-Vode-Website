@@ -192,7 +192,7 @@ export const menuTranslations = {
 
             /* ================= FISH ================= */
             grilledTrout: { name: "Pastrmka na žaru", desc: "Svježa pastrmka pečena na žaru." },
-            boneLessTrout: { name: "Pastrmka bez kostiju", desc: "Filetirana pastrmka bez kostiju." },
+            boneLessTrout: { name: "Dimljena pastrmka bez kostiju", desc: "Dimljena filetirana pastrmka bez kostiju." },
 
             /* ================= TO ORDER ================= */
             breadedChickenFilletSesame: { name: "Susam piletina", desc: "Pohovani pileći file u susamu." },
@@ -552,7 +552,7 @@ export const menuTranslations = {
 
             /* ================= FISH ================= */
             grilledTrout: { name: "Grilled trout", desc: "Fresh trout prepared on the grill." },
-            boneLessTrout: { name: "Boneless trout", desc: "Boneless trout fillet." },
+            boneLessTrout: { name: "Smoked boneless trout", desc: "Smoked boneless trout fillet." },
 
             /* ================= TO ORDER ================= */
             breadedChickenFilletSesame: { name: "Sesame chicken", desc: "Breaded chicken fillet in sesame seeds." },
